@@ -84,10 +84,9 @@ install-ci:
 
 seed-ci:
 	php artisan db:seed --force
-	docker-compose exec app-fpm php artisan db:seed --class="Database\Seeders\TimeZonesTableSeeder" --force
 
 optimize-ci:
-	php artisan optimize
+	php artisan optimize:fresh --seed --force
 
 database-prepare-ci:
 	php artisan migrate:fresh --force
