@@ -29,42 +29,42 @@ jobs:
         ports:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432
-        steps:
-            - uses: actions/checkout@v3
+    steps:
+          - uses: actions/checkout@v3
 
-            - name: Start Redis
-              uses: getong/redis-action@v1
-              with:
-                  redis version: '6.0.17'
-                  host port: 6379
-                  container port: 6379
-                  redis password: 'siteWorld'
+          - name: Start Redis
+            uses: getong/redis-action@v1
+            with:
+                redis version: '6.0.17'
+                host port: 6379
+                container port: 6379
+                redis password: 'siteWorld'
 
-            - name: Setup PHP with Xdebug 2.x
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: '8.1'
-                  coverage: xdebug2
+          - name: Setup PHP with Xdebug 2.x
+            uses: shivammathur/setup-php@v2
+            with:
+                php-version: '8.1'
+                coverage: xdebug2
 
-            - name: Setup project
-              run: make setup-ci
-              env:
-                  REDIS_HOST: localhost
-                  REDIS_PASSWORD: 123456
+          - name: Setup project
+            run: make setup-ci
+            env:
+                REDIS_HOST: localhost
+                REDIS_PASSWORD: 123456
 
-            - name: Check lint
-              run: make lint
+          - name: Check lint
+            run: make lint
 
-            - name: Run tests covarage
-              uses: paambaati/codeclimate-action@v3.2
-              env:
-                  CC_TEST_REPORTER_ID: ${{ secrets.CLIMAT_ID }}
-                  REDIS_HOST: localhost
-                  REDIS_PORT: 6379
-                  REDIS_PASSWORD: 123456
-              with:
-                  coverageCommand: make test-coverage-ci
-                  coverageLocations: ${{github.workplace}}/build/logs/clover.xml:clover
-                  debug: true
+          - name: Run tests covarage
+            uses: paambaati/codeclimate-action@v3.2
+            env:
+                CC_TEST_REPORTER_ID: ${{ secrets.CLIMAT_ID }}
+                REDIS_HOST: localhost
+                REDIS_PORT: 6379
+                REDIS_PASSWORD: 123456
+            with:
+                coverageCommand: make test-coverage-ci
+                coverageLocations: ${{github.workplace}}/build/logs/clover.xml:clover
+                debug: true
 
 
