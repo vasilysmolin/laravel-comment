@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+
+    app-fpm:
+        image: kitman/php-8.1:main
+        env_file: .env
+        restart: always
+        working_dir: /var/www/laravel-comment
+        volumes:
+            - .:/var/www/laravel-comment
+
+    app-nginx:
+        image: kitman/nginx:main
+        restart: always
+        ports:
+            - "127.0.0.1:3380:80"
+        links:
+            - "app-fpm:php-fpm"
+        volumes:
+            - .:/var/www/laravel-comment
+
+    jobs:
+        image: kitman/php-8.1:main
+        env_file: .env
+        restart: always
+        volumes:
+            - .:/var/www/laravel-comment
+        command: php artisan queue:work database --tries=3 --sleep=3 --timeout=30
+
+    cron:
+        image: kitman/php-8.1:main
+        env_file: .env
+        restart: always
+        volumes:
+            - .:/var/www/laravel-comment
+        command: sh -c "while [ true ]; do (php /var/www/laravel-comment/artisan schedule:run --verbose --no-interaction &); sleep 60; done"
+
+
+        # Redis -------------------------------------------------
+
+    redis:
+        image: redis:6-alpine
+        restart: always
+        volumes:
+            - ./images/redis/redis.conf:/redis.conf
+        command: [ "redis-server", "/redis.conf" ]
+
+    mariadb:
+        image: mariadb
+        restart: always
+        volumes:
+            - ./mariadb_data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        ports:
+            - "3308:3306"
+
+    meilisearch:
+        image: getmeili/meilisearch:latest
+        restart: always
+        volumes:
+            - ./data.ms:/data.ms
+        environment:
+            - MEILI_NO_ANALYTICS=true
+            - MEILI_NO_SENTRY=true
+            - MEILI_MASTER_KEY=${MEILISEARCH_KEY}
+        ports:
+            - "7702:7700"

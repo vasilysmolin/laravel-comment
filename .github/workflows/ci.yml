@@ -1,0 +1,77 @@
+name: ci
+
+on:
+    push:
+        branches: [main, main-docker]
+        tags:
+            - '**'
+
+jobs:
+    app-build:
+        name: Install ubuntu
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+            - uses: mirromutth/mysql-action@v1.1
+              with:
+                  host port: 3306 # Optional, default value is 3306. The port of host
+                  container port: 3306 # Optional, default value is 3306. The port of container
+                  character set server: 'utf8' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
+                  collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
+                  mysql version: '5.7' # Optional, default value is "latest". The version of the MySQL
+                  mysql database: 'laravel-comment' # Optional, default value is "test". The specified database which will be create
+                  mysql root password: 'pass_laravel-comment' # Required if "mysql user" is empty, default is empty. The root superuser password
+                  mysql user: 'root' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
+                  mysql password: 'pass_laravel-comment' # Required if "mysql user" exists. The password for the "mysql user"
+
+            - name: Start Redis
+              uses: getong/redis-action@v1
+              with:
+                  redis version: '6.0.17'
+                  host port: 6379
+                  container port: 6379
+                  redis password: 'siteWorld'
+
+            - name: Setup PHP with Xdebug 2.x
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.1'
+                  coverage: xdebug2
+
+            - name: env
+              run: cp -n .env.runner .env || true
+
+            - name: Setup project
+              run: make setup-ci
+              env:
+                  REDIS_HOST: localhost
+                  REDIS_PORT: 6379
+                  DB_HOST: localhost
+                  REDIS_PASSWORD: 123456
+                  DB_DATABASE: laravel-comment
+                  DB_USERNAME: root
+                  DB_PASSWORD: pass_laravel-comment
+                  DB_PORT: 3306
+
+            - name: Check lint
+              run: make lint
+
+            - name: Run tests covarage
+              uses: paambaati/codeclimate-action@v3.2
+              env:
+                  CC_TEST_REPORTER_ID: ${{ secrets.CLIMAT_ID }}
+                  REDIS_HOST: localhost
+                  REDIS_PORT: 6379
+                  REDIS_PASSWORD: 123456
+                  DB_HOST: localhost
+                  DB_DATABASE: laravel-comment
+                  DB_USERNAME: root
+                  DB_PASSWORD: pass_laravel-comment
+                  DB_PORT: 3306
+              with:
+                  coverageCommand: make test-coverage-ci
+                  coverageLocations: ${{github.workplace}}/build/logs/clover.xml:clover
+                  debug: true
+
+
