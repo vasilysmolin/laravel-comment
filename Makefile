@@ -75,7 +75,6 @@ env-prepare-ci:
 
 key-ci:
 	php artisan key:gen --ansi
-	php artisan jwt:secret --force
 
 test-coverage-ci:
 	composer exec --verbose phpunit tests -- --coverage-clover build/logs/clover.xml
