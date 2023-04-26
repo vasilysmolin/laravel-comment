@@ -20,7 +20,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('main');
 
-Route::resource('articles', ArticleController::class);
+Route::resource('articles', ArticleController::class)->only('index', 'show');
 Route::apiResource('comments', CommentController::class);
 
 Route::get('/dashboard', function () {

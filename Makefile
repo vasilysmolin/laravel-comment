@@ -77,7 +77,7 @@ key-ci:
 	php artisan key:gen --ansi
 
 test-coverage-ci:
-	composer exec --verbose phpunit tests -- --coverage-clover build/logs/clover.xml
+	php artisan test --group ci --coverage-clover build/logs/clover.xml
 
 install-ci:
 	composer install

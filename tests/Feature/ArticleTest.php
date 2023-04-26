@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\Article;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -17,12 +19,21 @@ class ArticleTest extends TestCase
      */
     protected function setUp(): void
     {
+
         parent::setUp();
     }
 
-    public function testMainIndex(): void
+    public function testIndex(): void
     {
-        $response = $this->get(route('main'));
+        Article::factory(10)->create();
+        $response = $this->get(route('articles.index'));
+        $response->assertOk();
+    }
+
+    public function testShow(): void
+    {
+        $this->article = Article::factory(1)->create();
+        $response = $this->get(route('articles.show', [$this->article->slug]));
         $response->assertOk();
     }
 }

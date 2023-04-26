@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Atricle extends Model
+class Article extends Model
 {
     use HasFactory;
     use HasSlug;
@@ -22,6 +22,6 @@ class Atricle extends Model
         return SlugOptions::create()
             ->doNotGenerateSlugsOnUpdate()
             ->generateSlugsFrom('name')
-            ->saveSlugsTo('alias');
+            ->saveSlugsTo('slug');
     }
 }

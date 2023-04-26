@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('atricles', function (Blueprint $table) {
+        Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->index();
             $table->string('slug')->unique();
-            $table->string('name')->nullable();
+            $table->string('name');
             $table->text('text')->nullable();
             $table->integer('sort')->nullable();
             $table->integer('active')->unsigned()->default(1);
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('atricles');
+        Schema::dropIfExists('aticles');
     }
 };
