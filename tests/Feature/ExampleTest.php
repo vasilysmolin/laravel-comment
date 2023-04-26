@@ -1,24 +1,7 @@
 <?php
 
-namespace Tests\Feature;
+it('returns a successful response', function () {
+    $response = $this->get('/');
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-
-class ExampleTest extends TestCase
-{
-    use DatabaseTransactions;
-    /**
-     * A basic test example.
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    public function testMainIndex(): void
-    {
-        $response = $this->get(route('main'));
-        $response->assertOk();
-    }
-}
+    $response->assertStatus(200);
+});
