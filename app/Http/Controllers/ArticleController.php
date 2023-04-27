@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -14,7 +15,10 @@ class ArticleController extends Controller
 
     public function show(string $slug)
     {
-        $article = Article::where('slug', $slug)->with('comments')->first();
-        return view('articles.show', compact('article'));
+        $article = Article::where('slug', $slug)
+            ->with('comments.childrenComments')
+            ->first();
+        $user = Auth::user();
+        return view('articles.show', compact('article', 'user'));
     }
 }

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('article_id')->index();
             $table->unsignedBigInteger('comment_id')->nullable()->index();
             $table->text('text');
-            $table->integer('likes')->default(0);
             $table->integer('active')->unsigned()->default(1);
             $table->timestamps();
         });
