@@ -21,7 +21,6 @@ Route::get('/', function () {
 })->name('main');
 
 Route::resource('articles', ArticleController::class)->only('index', 'show');
-Route::apiResource('comments', CommentController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
