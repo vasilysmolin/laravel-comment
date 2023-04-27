@@ -24,6 +24,15 @@ class CommentTest extends TestCase
         parent::setUp();
     }
 
+    public function testIndex(): void
+    {
+        $article = Article::factory(1)->create()->first();
+        $response = $this->json('GET', route('comments.store'), [
+            'article_id' => $article->getKey(),
+        ]);
+        $response->assertOk();
+    }
+
     public function testStore(): void
     {
         $article = Article::factory(1)->create()->first();
