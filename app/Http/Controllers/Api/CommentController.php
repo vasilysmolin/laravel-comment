@@ -10,7 +10,6 @@ use Illuminate\Http\Response;
 
 class CommentController extends Controller
 {
-
     public function index(CommentIndexRequest $request)
     {
         $comments = Comment::where('article_id', $request->article_id)
@@ -26,7 +25,6 @@ class CommentController extends Controller
         $comment->fill($data);
         $comment->save();
 
-        return response()->json([],Response::HTTP_CREATED);
+        return response()->json([], Response::HTTP_CREATED);
     }
-
 }
