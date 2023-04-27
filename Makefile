@@ -82,7 +82,7 @@ test-coverage-ci:
 install-ci:
 	composer install
 	npm i
-	npm build
+	npm run build
 
 seed-ci:
 	php artisan db:seed --force
