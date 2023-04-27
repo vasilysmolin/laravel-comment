@@ -32,7 +32,7 @@ class ArticleTest extends TestCase
 
     public function testShow(): void
     {
-        $this->article = Article::factory(1)->create();
+        $this->article = Article::factory(1)->create()->first();
         $response = $this->get(route('articles.show', [$this->article->slug]));
         $response->assertOk();
     }

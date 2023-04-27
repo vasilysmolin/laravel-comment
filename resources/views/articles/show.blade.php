@@ -12,7 +12,8 @@
         <div id="review-component">
         <review-component
             :reviews="{{$article->comments}}"
-            :user="{{$user}}">
+            :user="{{$user}}"
+            :article="{{$article->getKey()}}">
         </review-component>
         </div>
     </div>

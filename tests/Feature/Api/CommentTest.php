@@ -26,8 +26,8 @@ class CommentTest extends TestCase
 
     public function testStore(): void
     {
-        $article = Article::factory(1)->create();
-        $user = User::factory(1)->create();
+        $article = Article::factory(1)->create()->first();
+        $user = User::factory(1)->create()->first();
         $response = $this->json('POST', route('comments.store'), [
             'text' => $this->faker->text,
             'article_id' => $article->getKey(),
