@@ -1,7 +1,7 @@
 FROM composer:2 AS composer
 FROM php:8.1.1-fpm-alpine
 
-WORKDIR /var/www/himbaz-php/
+WORKDIR /var/www/laravel-comment/
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
