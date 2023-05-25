@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\Article;
+use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CommentFactory extends Factory
+class AdFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,9 +16,9 @@ class CommentFactory extends Factory
     public function definition(): array
     {
         return [
+            'name' => fake()->name(),
             'text' => fake()->text(),
             'user_id' => User::factory(),
-            'article_id' => Article::factory(),
         ];
     }
 

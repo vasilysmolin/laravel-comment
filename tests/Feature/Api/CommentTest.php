@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Api;
 
-use App\Models\Article;
+use App\Models\Ad;
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -26,7 +26,7 @@ class CommentTest extends TestCase
 
     public function testIndex(): void
     {
-        $article = Article::factory(1)->create()->first();
+        $article = Ad::factory(1)->create()->first();
         $response = $this->json('GET', route('comments.store'), [
             'article_id' => $article->getKey(),
         ]);
@@ -35,7 +35,7 @@ class CommentTest extends TestCase
 
     public function testStore(): void
     {
-        $article = Article::factory(1)->create()->first();
+        $article = Ad::factory(1)->create()->first();
         $user = User::factory(1)->create()->first();
         $response = $this->json('POST', route('comments.store'), [
             'text' => $this->faker->text,

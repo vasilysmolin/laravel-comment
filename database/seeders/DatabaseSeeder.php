@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Article;
+use App\Models\Ad;
 use App\Models\Comment;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-         Article::factory(10)->create();
+         Ad::factory(10)->create();
          Comment::factory(4)->create();
     }
 }

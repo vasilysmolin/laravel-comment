@@ -37,20 +37,8 @@ sudo apt-get install docker-compose
 sudo apt install -y python3-certbot-nginx
 certbot --nginx
 
-### Для локалки
-openssl req -x509 -nodes -days 365 \
--subj '/C=CA/ST=QC/O=Company, Inc./CN=laravel-comment.ru' \
--addext 'subjectAltName=DNS:'laravel-comment.ru \
--newkey rsa:4096 \
--keyout /etc/nginx/ssl/laravel-comment.ru.key -out /etc/nginx/ssl/laravel-comment.ru.cer
-
-```
-hosts 127.0.0.1 laravel-comment.ru
-```
 
 # Запус проекта
-Необходимо настроить локальный nginx.
-Конфигурация лежит в папке images/local-nginx
 
 make start или docker-compose up -d
 

@@ -1,3 +1,6 @@
+start:
+	php artisan serve --host 0.0.0.0 --port 80
+
 test:
 	docker-compose exec app-fpm php artisan test
 

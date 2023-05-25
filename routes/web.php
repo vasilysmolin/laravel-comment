@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\CommentController;
-use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\AdController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('main');
-
-Route::resource('articles', ArticleController::class)->only('index', 'show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

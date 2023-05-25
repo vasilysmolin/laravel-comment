@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
+use Beauty\Modules\Common\Models\Traits\ModelWithImagesTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Article extends Model
+class Ad extends Model
 {
     use HasFactory;
     use HasSlug;
+    use ModelWithImagesTrait;
 
     /**
      * Get the options for generating the slug.
@@ -30,9 +32,4 @@ class Article extends Model
         return $this->hasOne(User::class);
     }
 
-    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Comment::class)->whereNull('comment_id')
-            ->with('user');
-    }
 }
