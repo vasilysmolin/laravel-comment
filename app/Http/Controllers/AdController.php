@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ad;
-use Illuminate\Support\Facades\Auth;
 
 class AdController extends Controller
 {
     public function index()
     {
         $ads = Ad::with('images')->paginate();
+        $ads->getCollection()->transform(function($ad) {
+            $ad->images = $ad->setDisk(config('app.filesystem_driver'))->getImages();
+            $ad->image = $ad->setDisk(config('app.filesystem_driver'))->getFirstImage();
+        });
         return response()->json($ads);
     }
 
@@ -18,6 +21,10 @@ class AdController extends Controller
         $ad = Ad::where('slug', $slug)
             ->with('images')
             ->first();
+
+        $ad->images = $ad->setDisk(config('app.filesystem_driver'))->getImages();
+        $ad->image = $ad->setDisk(config('app.filesystem_driver'))->getFirstImage();
+
         return response()->json($ad);
     }
 }

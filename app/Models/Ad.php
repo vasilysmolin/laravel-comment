@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Beauty\Modules\Common\Models\Traits\ModelWithImagesTrait;
+use App\Models\Traits\ModelWithImagesTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;

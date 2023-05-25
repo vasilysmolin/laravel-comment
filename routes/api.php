@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
-    'namespace' => 'Auth',
+    'namespace' => 'App\Http\Controllers\Auth',
     'prefix' => 'auth',
 ], function () {
 
@@ -15,14 +15,17 @@ Route::group([
     Route::post('register', 'AuthController@register');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
-    Route::get('user', 'AuthController@user')->middleware('auth:api');
+    Route::get('user', 'AuthController@user')
+        ->middleware('auth:api');
 
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::apiResource('ads', AdController::class)->middleware('auth:api');
+
+Route::apiResource('ads', AdController::class)
+    ->middleware('auth:api');
 
 Route::group([
     'prefix' => 'my',
@@ -35,7 +38,8 @@ Route::group([
             'destroy' => 'my.ads.destroy',
             'show' => 'my.ads.show',
         ],
-    ])->middleware('auth:api');
+    ])
+        ->middleware('auth:api');
 });
 
 

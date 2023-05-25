@@ -1,6 +1,6 @@
 <?php
 
-namespace Beauty\Modules\Common\Models\Traits;
+namespace App\Models\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;

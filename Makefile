@@ -68,9 +68,6 @@ setup:
 db-import-from-backup:
 	docker-compose exec -T database psql -d tapigo-database -U postgres  < data
 
-start:
-	docker-compose up- d
-
 setup-ci: env-prepare-ci install-ci key-ci database-prepare-ci seed-ci
 
 env-prepare-ci:
