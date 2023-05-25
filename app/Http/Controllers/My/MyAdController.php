@@ -53,7 +53,8 @@ class MyAdController extends Controller
         $ad = Ad::find($id);
         $ad->fill($formData);
         $ad->update();
-        if ($request->images) {
+
+        if ($request->images && $ad->images->count() + count($request->images) < 10) {
             $ad
                 ->setImages($request->images)
                 ->setDisk(config('app.filesystem_driver'))

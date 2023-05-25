@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Ad;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class AdStoreRequest extends FormRequest
 {
@@ -26,6 +27,14 @@ class AdStoreRequest extends FormRequest
         return [
             'name' => 'required|string|min:1|max:255',
             'text' => 'string|min:1|max:2000',
+            'files' => [
+                'required',
+                'min:1',
+                'max:10',
+                File::types(['jpg', 'png', 'avif', 'webp'])
+                    ->min(1024)
+                    ->max(12 * 1024),
+            ]
         ];
     }
 }

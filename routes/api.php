@@ -25,7 +25,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('ads', AdController::class)
-    ->middleware('auth:api');
+//    ->middleware('auth:api')
+;
 
 Route::group([
     'prefix' => 'my',
