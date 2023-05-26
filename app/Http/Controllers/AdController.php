@@ -20,6 +20,7 @@ class AdController extends Controller
     {
         $ad = Ad::where('slug', $slug)
             ->with('images')
+            ->with('user:id,name')
             ->first();
 
         $ad->images = $ad->setDisk(config('app.filesystem_driver'))->getImages();
